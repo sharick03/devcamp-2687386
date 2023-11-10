@@ -4,7 +4,7 @@ const mongoose = require('mongoose')
 const BootcampSchema = new mongoose.Schema({
     name: {
         type: String,
-        unique: true,
+        unique: [true, "Nombre ya existente"],
         required: [
             true,
             "Nombre requerido"
@@ -16,11 +16,12 @@ const BootcampSchema = new mongoose.Schema({
             true,
             "Telefono requerido"
         ],
-        maxlength:[
-            10, "Telefono no debe ser mayor a 10"
+        max:[
+            7777777777, "Telefono no debe ser mayor a 10"
         ],
-        minlength:[
-            7, "Telefono debe tener al menos 7 digitos"
+        min:[
+            //Poner numero de limite osea 7 numeros
+            1111111, "Telefono debe tener al menos 7 digitos"
         ]
     },
     address:{

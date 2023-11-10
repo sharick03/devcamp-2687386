@@ -2,24 +2,24 @@ const express = require('express')
 const mongoose = require ('mongoose')
 //definir ruta
 const router = express.Router()
-const BootcampModel = require('../models/bootcampModel')
+const ReviewModel = require('../models/reviewModel')
+const reviewModel = require('../models/reviewModel')
 
 router.get('/', async (req, res)=>{
-    //Utilizar el modelo para seleccionar todos los bootcamp de la bd
     try{
-        const bootcamps = await BootcampModel.find()
-        if(bootcamps.length > 0){
+        const review = await ReviewModel.find()
+        if(review.length > 0){
             res.
             status(200).
             json({
                 success: true,
-                data: bootcamps
+                data: review
             })
         }else{
             res.status(400)
             .json({
             success: false,
-            message: 'No hay bootcamps'
+            message: 'No hay reviews'
         })
         }
 
@@ -33,32 +33,30 @@ router.get('/', async (req, res)=>{
     }
 })
 
-//bootcamp por id
 router.get('/:id', async (req, res)=>{
-    //Extraer el id del bootcamp del parametro url
     try{
-        bootcampId = req.params.id
-        if(!mongoose.Types.ObjectId.isValid(bootcampId)){
+        reviewId = req.params.id
+        if(!mongoose.Types.ObjectId.isValid(reviewId)){
             res.status(500)
             .json({
                 success: false,
                 msg: "identificador invalido"
                 })
         }else{
-            const bootcamp = await bootcampModel.findById(bootcampId)
-            if(bootcamp){
+            const review = await reviewModel.findById(reviewId)
+            if(review){
                 res.
                 status(200)
                 .json({
                     success: true,
-                    data: bootcamp
+                    data: review
             })
             }else{
                 res
                 .status(400)
                 .json({
                     success: false,
-                    message: `No hay bootcamps con id: ${bootcampId}`
+                    message: `No hay bootcamps con id: ${reviewId}`
             })
             }
         }
@@ -72,15 +70,14 @@ router.get('/:id', async (req, res)=>{
     }
 })
 
-//crear bootcamp
 router.post('/', async (req, res)=>{
     try{
-        const newBootcamp = await BootcampModel.create(req.body)
+        const newReview = await ReviewModel.create(req.body)
         res.
         status(400)
         .json({
         success: true,
-        data: newBootcamp
+        data: newReview
     })
     }catch(error){
         res.status(400)
@@ -91,35 +88,35 @@ router.post('/', async (req, res)=>{
     }
 })
 
-//editar bootcamp por id
+//editar
 router.put('/:id', async (req, res)=>{
     try{
-        const bootcampId = req.params.id
-        if(!mongoose.Types.ObjectId.isValid(bootcampId)){
+        const reviewId = req.params.id
+        if(!mongoose.Types.ObjectId.isValid(reviewId)){
             res.status(500)
             .json({
                 success: false,
                 msg: "identificador invalido"
             })
         }else{
-            const updBootcamp =
-                await BootcampModel.
-                findByIdAndUpdate(bootcampId, 
+            const updReview =
+                await ReviewModel.
+                findByIdAndUpdate(reviewId, 
                     req.body, 
                     {
                     new: true
                 })
-            if(updBootcamp){
+            if(updReview){
                 res.json({
                     success: true,
-                    data:updBootcamp
+                    data:updReview
                 })
             }else{
                 res
                 .status(400)
                 .json({
                     success: false,
-                    message: `No hay bootcamps con id: ${bootcampId}`
+                    message: `No hay bootcamps con id: ${reviewId}`
             })
             }
         }
@@ -132,31 +129,31 @@ router.put('/:id', async (req, res)=>{
     }
 })
 
-//eliminar bootcamp
+//eliminar
 router.delete('/:id', async (req, res)=>{
     try{
-        const bootcampId = req.params.id
-        if(!mongoose.Types.ObjectId.isValid(bootcampId)){
+        const reviewId = req.params.id
+        if(!mongoose.Types.ObjectId.isValid(reviewId)){
             res.status(500)
             .json({
                 success: false,
                 msg: "identificador invalido"
             })
         }else{
-            const delBootcamp = 
-            await BootcampModel.findByIdAndDelete(bootcampId)
+            const delReview = 
+            await ReviewModel.findByIdAndDelete(reviewId)
 
-            if(delBootcamp){
+            if(delReview){
                 res.json({
                     success: true,
-                    data: delBootcamp
+                    data: delReview
                 })
             }else{
                 res
                 .status(400)
                 .json({
                     success: false,
-                    message: `No hay bootcamps con id: ${bootcampId} por lo tanto no se puede eliminar`
+                    message: `No hay reviews con id: ${reviewId} por lo tanto no se puede eliminar`
             })
             }
         }

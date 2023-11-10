@@ -5,6 +5,8 @@ const conectarDB = require('./config/db')
 
 //dependencias de rutas
 const bootcampRoutes = require('./routes/bootcampRoutes')
+const courseRoutes = require('./routes/courseRotes')
+const reviewRoutes = require('./routes/reviewRouter')
 
 //vincular archivo de configuracion
 dotenv.config(
@@ -22,6 +24,8 @@ app.use(express.json())
 
 //conectar rutas a objeto app
 app.use('/api/v1/devcamp/bootcamps', bootcampRoutes)
+app.use('/api/v1/devcamp/courses', courseRoutes)
+app.use('/api/v1/devcamp/reviews', reviewRoutes)
 
 //rutas de prueba 
 app.get('/prueba', (request, response)=>{
@@ -31,10 +35,6 @@ app.get('/prueba', (request, response)=>{
 app.get('/prueba/:id', (request, response)=>{
     response.send(`Hola, ${ request.params.id }`)
 })
-
-
-
-
 
 //----------------- courses -------------------------------
 //traer todos los courses
